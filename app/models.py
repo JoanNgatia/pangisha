@@ -8,6 +8,7 @@ class Building(models.Model):
     """Building details."""
 
     owner = models.CharField(max_length=255)
+    location = models.CharField(max_length=250, default='Nairobi')
 
 
 class Tenant(models.Model):
@@ -23,11 +24,11 @@ class House(models.Model):
         ('2 Bedroom', '2 Bedroom'),
         ('Shop', 'Shop'),
     )
+    house_type = models.CharField(max_length=15, blank=True, choices=CATEGORY_CHOICES)
+    description = models.TextField()
+    rent_expected = models.CharField(max_length=6)
     building = models.ForeignKey(
         Building, related_name='houses', on_delete=models.CASCADE)
-    description = models.TextField()
     number = models.CharField(max_length=3)
     tenant = models.ForeignKey(
         Tenant, on_delete=models.SET_NULL, related_name='tenants', null=True)
-    rent_expected = models.CharField(max_length=6)
-    house_type = models.CharField(max_length=15, blank=True, choices=CATEGORY_CHOICES)
