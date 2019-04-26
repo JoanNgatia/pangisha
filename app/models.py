@@ -13,11 +13,16 @@ class Building(models.Model):
 class Tenant(models.Model):
 
     name = models.CharField(max_length=200)
-    phone_number = models.CharField(max_length=15)
-    national_id = models.CharField(max_length=20)
+    date_joined = models.DateTimeField(auto_now=True)
 
 
 class House(models.Model):
+    CATEGORY_CHOICES = (
+        ('Bedsitter', 'Bedsitter'),
+        ('1 Bedroom', '1 Bedroom'),
+        ('2 Bedroom', '2 Bedroom'),
+        ('Shop', 'Shop'),
+    )
     building = models.ForeignKey(
         Building, related_name='houses', on_delete=models.CASCADE)
     description = models.TextField()
@@ -25,3 +30,4 @@ class House(models.Model):
     tenant = models.ForeignKey(
         Tenant, on_delete=models.SET_NULL, related_name='tenants', null=True)
     rent_expected = models.CharField(max_length=6)
+    house_type = models.CharField(max_length=15, blank=True, choices=CATEGORY_CHOICES)
