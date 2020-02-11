@@ -3,8 +3,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
-# Create your tests here.
-from models import Building, House
+from .models import Building, House
 
 
 class ModelTestCase(TestCase):

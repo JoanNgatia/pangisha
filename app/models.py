@@ -9,12 +9,10 @@ class Building(models.Model):
 
     owner = models.CharField(max_length=255)
     location = models.CharField(max_length=250, default='Nairobi')
-
-
-class Tenant(models.Model):
-
     name = models.CharField(max_length=200)
-    date_joined = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 class House(models.Model):
@@ -30,5 +28,17 @@ class House(models.Model):
     building = models.ForeignKey(
         Building, related_name='houses', on_delete=models.CASCADE)
     number = models.CharField(max_length=3)
-    tenant = models.ForeignKey(
-        Tenant, on_delete=models.SET_NULL, related_name='tenants', null=True)
+
+    def __str__(self):
+        return self.number
+
+
+class Tenant(models.Model):
+
+    name = models.CharField(max_length=200)
+    date_joined = models.DateTimeField(auto_now=True)
+    current_space = models.ForeignKey(House, on_delete=models.CASCADE, related_name='tenant', null=True)
+
+    def __str__(self):
+        return self.name
+
